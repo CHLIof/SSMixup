@@ -1,6 +1,6 @@
-# Train CIFAR10 with PyTorch
+# SSMixup:Simple Style transfer Mixing Data Augmentation
 
-I'm playing with [PyTorch](http://pytorch.org/) on the CIFAR10 dataset.
+Implementation of [SSMixup:Simple Style transfer Mixing Data Augmentation].
 
 ## Prerequisites
 - Python 3.6+
@@ -8,28 +8,58 @@ I'm playing with [PyTorch](http://pytorch.org/) on the CIFAR10 dataset.
 
 ## Training
 ```
-# Start training with: 
-python main.py
+# train on CIFAR-10: 
+python SSMixup.py -d cifar-10 -m resnet-18 --r 0.8 --alpha 0.5
 
-# You can manually resume the training with: 
-python main.py --resume --lr=0.01
+python SSCutMix.py -d cifar-10 -m resnet-18 --prob 0.5 --r 0.7 --alpha2 0.8
+
+python SSCutout.py -d cifar-10 -m resnet-18 --length 16 --alpha 0.5
+
+# train on CIFAR-100: 
+python SSMixup.py -d cifar-100 -m resnet-18 --r 0.8 --alpha 0.5
+
+python SSCutMix.py -d cifar-100 -m resnet-18 --prob 0.5 --r 0.8 --alpha2 0.8
+
+python SSCutout.py -d cifar-100 -m resnet-18 --length 16 --alpha 0.5
 ```
+## Acknowledgement
+The implementation of SSMixup is adapted from the [pytorch-cifar](https://github.com/kuangliu/pytorch-cifar) repository by [kuangliu](https://github.com/kuangliu).
 
-## Accuracy
-| Model             | Acc.        |
-| ----------------- | ----------- |
-| [VGG16](https://arxiv.org/abs/1409.1556)              | 92.64%      |
-| [ResNet18](https://arxiv.org/abs/1512.03385)          | 93.02%      |
-| [ResNet50](https://arxiv.org/abs/1512.03385)          | 93.62%      |
-| [ResNet101](https://arxiv.org/abs/1512.03385)         | 93.75%      |
-| [RegNetX_200MF](https://arxiv.org/abs/2003.13678)     | 94.24%      |
-| [RegNetY_400MF](https://arxiv.org/abs/2003.13678)     | 94.29%      |
-| [MobileNetV2](https://arxiv.org/abs/1801.04381)       | 94.43%      |
-| [ResNeXt29(32x4d)](https://arxiv.org/abs/1611.05431)  | 94.73%      |
-| [ResNeXt29(2x64d)](https://arxiv.org/abs/1611.05431)  | 94.82%      |
-| [SimpleDLA](https://arxiv.org/abs/1707.064)           | 94.89%      |
-| [DenseNet121](https://arxiv.org/abs/1608.06993)       | 95.04%      |
-| [PreActResNet18](https://arxiv.org/abs/1603.05027)    | 95.11%      |
-| [DPN92](https://arxiv.org/abs/1707.01629)             | 95.16%      |
-| [DLA](https://arxiv.org/pdf/1707.06484.pdf)           | 95.47%      |
 
+## Citation
+```
+@InProceedings{hong2021stylemix,
+    author    = {Minui Hong and Jinwoo Choi and Gunhee Kim},
+    title     = {StyleMix: Separating Content and Style for Enhanced Data Augmentation},
+    booktitle = {CVPR},
+    year      = {2021}
+}
+```
+```
+@article{
+zhang2018mixup,
+title={mixup: Beyond Empirical Risk Minimization},
+author={Hongyi Zhang, Moustapha Cisse, Yann N. Dauphin, David Lopez-Paz},
+journal={International Conference on Learning Representations},
+year={2018},
+url={https://openreview.net/forum?id=r1Ddp1-Rb},
+}
+```
+```
+@inproceedings{yun2019cutmix,
+    title={CutMix: Regularization Strategy to Train Strong Classifiers with Localizable Features},
+    author={Yun, Sangdoo and Han, Dongyoon and Oh, Seong Joon and Chun, Sanghyuk and Choe, Junsuk and Yoo, Youngjoon},
+    booktitle = {International Conference on Computer Vision (ICCV)},
+    year={2019},
+    pubstate={published},
+    tppubtype={inproceedings}
+}
+```
+```
+@article{devries2017cutout,  
+  title={Improved Regularization of Convolutional Neural Networks with Cutout},  
+  author={DeVries, Terrance and Taylor, Graham W},  
+  journal={arXiv preprint arXiv:1708.04552},  
+  year={2017}  
+}
+```
